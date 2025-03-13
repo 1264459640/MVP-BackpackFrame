@@ -23,7 +23,7 @@ namespace UniRxCustom
 
         private bool calledStart = false;
         private Subject<Unit> start;
-        
+
         private void Start()
         {
             calledStart = true;

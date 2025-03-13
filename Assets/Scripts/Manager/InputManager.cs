@@ -14,7 +14,7 @@ namespace Manager
 		private readonly CompositeDisposable disposables = new();
 		public Vector2 MousePos => input.UI.Point.ReadValue<Vector2>();
 		
-		public Observable<Unit> Cancel { get; private set; }
+		public Observable<InputAction.CallbackContext> Cancel { get; private set; }
 		public Observable<InputAction.CallbackContext> BackPack { get; private set; }
 		
 		public bool highestPriority = false;
@@ -34,31 +34,14 @@ namespace Manager
 				handler => input.UI.Backpack.performed += handler,
 				handler => input.UI.Backpack.performed -= handler)
 				.Where(_=> !UIManager.Instance.isBackPackActive);
+			BackPack.Subscribe(_ => UIEvents.BackpackShow?.Invoke()).AddTo(disposables);
 
-			
-			Cancel = (Observable<Unit>)Observable.FromEvent<InputAction.CallbackContext>(
+			Cancel = Observable.FromEvent<InputAction.CallbackContext>(
 					handler => input.UI.Cancel.performed += handler,
-					handler => input.UI.Cancel.performed -= handler)
-				.Subscribe(_=> HandleCancelPriority())
-				.AddTo(disposables);
+					handler => input.UI.Cancel.performed -= handler);
+			Cancel.Subscribe(_ => HandleCancelPriority()).AddTo(disposables);
 
 		}
-
-		private void HighestPriorityStream()
-		{
-			
-		}
-
-		private void MediumPriorityStream()
-		{
-			
-		}
-		
-		private static void LowestPriorityStream()
-		{
-			UIEvents.ScreenClosed?.Invoke();
-		}
-		
 		private void HandleCancelPriority()
 		{
 			if (highestPriority)
@@ -69,11 +52,27 @@ namespace Manager
 			{
 				MediumPriorityStream();
 			}
-			else if (UIManager.Instance.HasUI)
+			else
 			{
 				LowestPriorityStream();
 			}
 		}
+		private void HighestPriorityStream()
+		{
+			Debug.Log("high");
+		}
+
+		private void MediumPriorityStream()
+		{
+			Debug.Log("medium");
+		}
+		
+		private static void LowestPriorityStream()
+		{
+			UIEvents.ScreenClosed?.Invoke();
+		}
+		
+		
 		private void OnDisable()
 		{
 			input.Disable();

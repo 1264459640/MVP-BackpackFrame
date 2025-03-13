@@ -1,7 +1,8 @@
+using System;
 using System.Collections.Generic;
 using Events;
-using UIFrame.Base;
-using UIFrame.Screens;
+using FrameWorks.UIFrame.Base;
+using FrameWorks.UIFrame.Screens;
 using UnityEngine;
 
 namespace Manager
@@ -11,7 +12,7 @@ namespace Manager
 		private UIScreen backpackScreen;
 
 		public UIScreen CurrentScreen { get; private set; }
-		public bool HasUI => history.Count != 0;
+		public bool HasUI => history.Count > 0;
 
 		private readonly Stack<UIScreen> history = new();
 		private List<UIScreen> screens = new();
@@ -27,7 +28,7 @@ namespace Manager
 
 		private void Initialize()
 		{
-			backpackScreen = new BackpackScreen(GameObject.Find("BackpackScreen"));
+			backpackScreen = new BackpackScreen(gameObject.transform.Find("BackpackScreen").gameObject);
 			RegisterScreens();
 			HideScreens();
 		}
@@ -38,24 +39,31 @@ namespace Manager
 		}
 		private void UIEvents_BackpackShown()
 		{
-			Show(backpackScreen);
+			Show(backpackScreen, true);
 		}
-		public void UIEvents_ScreenClosed()
+
+		private void UIEvents_ScreenClosed()
 		{
 			if (HasUI)
 			{
 				Show(history.Pop(), false);
+			}
+			else if(CurrentScreen != null)
+			{
+				Show(null,false);
 			}
 		}
 
 		private void SubscribeToEvents()
 		{
 			UIEvents.BackpackShow += UIEvents_BackpackShown;
+			UIEvents.ScreenClosed += UIEvents_ScreenClosed;
 		}
 
 		private void UnsubscribeFromEvents()
 		{
 			UIEvents.BackpackShow -= UIEvents_BackpackShown;
+			UIEvents.ScreenClosed -= UIEvents_ScreenClosed;
 		}
 		private void RegisterScreens()
 		{
@@ -74,12 +82,9 @@ namespace Manager
 				screen.Hide();
 			}
 		}
-		
-		public void Show(UIScreen screen, bool keepInHistory = true)
-		{
-			if (screen == null)
-				return;
 
+		private void Show(UIScreen screen, bool keepInHistory = true)
+		{
 			if (CurrentScreen != null)
 			{
 				CurrentScreen.Hide();
@@ -88,15 +93,9 @@ namespace Manager
 					history.Push(CurrentScreen);
 				}
 			}
-
-			screen.Show();
+			screen?.Show();
 			CurrentScreen = screen;
 		}
-
-		// Shows a UIScreen with the keepInHistory always enabled
-		public void Show(UIScreen screen)
-		{
-			Show(screen, true);
-		}
+		
 	}
 }
