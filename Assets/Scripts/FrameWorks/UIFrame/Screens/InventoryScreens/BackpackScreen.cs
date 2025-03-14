@@ -6,7 +6,7 @@ using R3;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace FrameWorks.UIFrame.Screens
+namespace FrameWorks.UIFrame.Screens.InventoryScreens
 {
 	public sealed class BackpackScreen : UIScreen
 	{

@@ -22,9 +22,9 @@ namespace FrameWorks.BackpackFrame.View
 				quantityText.text = item.quantity > 1 ? item.quantity.ToString() : "";
 				IconImage.color = Color.white;
 			}
-			else{
-				IconImage.color = new Color(1,1,1,0);
-				quantityText.text = "";
+			else
+			{
+				ClearSlot();
 			}
 		}
 

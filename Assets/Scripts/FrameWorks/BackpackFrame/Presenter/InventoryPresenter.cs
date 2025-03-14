@@ -41,12 +41,11 @@ namespace FrameWorks.BackpackFrame.Presenter
 
 		private void InitializeView()
 		{
-			Debug.Log("InitializeView");
 			view.Initialize(model.maxSlotCount);
-			Debug.Log(model.maxSlotCount);
 			UpdateView();
 		}
 		
+		//TODO: 只更新更改过的Slot
 		private void UpdateView()
 		{
 			for(var i=0; i<view?.SlotCount(); i++)
@@ -82,6 +81,7 @@ namespace FrameWorks.BackpackFrame.Presenter
 
 		private void HandleGrab(int index)
 		{
+			Debug.Log($"{index}HandleGrab");
 			if(dragPresenter.IsDragging) return;
 			dragPresenter.dragItem.Value = model.GetItem(index);
 		}
@@ -96,14 +96,10 @@ namespace FrameWorks.BackpackFrame.Presenter
 		private void HandleCancel()
 		{
 			InputManager.Instance.highestPriority = false;
-			StopDrag();
 			UpdateView();
 		}
 
-		private void StopDrag()
-		{
-			view.HideDraggingIcon();
-		}
+		
 		
 	}
 }

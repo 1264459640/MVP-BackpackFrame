@@ -7,16 +7,17 @@ using UnityEngine;
 
 namespace FrameWorks.BackpackFrame.Model
 {
-	public class InventoryModel
+	public class InventoryModel : MonoBehaviour
 	{
 		public ReactiveProperty<List<Item>> ItemList { get; private set; }
-		public readonly int maxSlotCount;
+		public int maxSlotCount = 40;
+		
 
-		public InventoryModel(int maxSlotCount)
+		private void Awake()
 		{
-			this.maxSlotCount = maxSlotCount;
 			ItemList = new ReactiveProperty<List<Item>>(Enumerable.Repeat<Item>(null, maxSlotCount).ToList());
 		}
+
 		/// <summary>
 		/// 尝试向背包中添加一个物品。
 		/// </summary>

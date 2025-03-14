@@ -34,7 +34,7 @@ namespace Manager
 				handler => input.UI.Backpack.performed += handler,
 				handler => input.UI.Backpack.performed -= handler)
 				.Where(_=> !UIManager.Instance.isBackPackActive);
-			BackPack.Subscribe(_ => UIEvents.BackpackShow?.Invoke()).AddTo(disposables);
+			BackPack.Subscribe(_ => UIEvents.InventoryShow?.Invoke()).AddTo(disposables);
 
 			Cancel = Observable.FromEvent<InputAction.CallbackContext>(
 					handler => input.UI.Cancel.performed += handler,

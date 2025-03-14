@@ -27,14 +27,10 @@ namespace FrameWorks.BackpackFrame.View
 
 		public int SlotCount() => slots.Length;
 		
-		private void Update()
-		{
-			UpdateDraggingPosition(Camera.main.ScreenToWorldPoint(InputManager.Instance.MousePos));
-		}
+		
 
 		public void Initialize(int slotCount)
 		{
-			HideDraggingIcon();
 			// 清空旧槽位
 			foreach (Transform child in slotsParent)
 			{
@@ -46,7 +42,6 @@ namespace FrameWorks.BackpackFrame.View
 			// 创建新槽位
 			for(var i = 0; i < slotCount; i++)
 			{
-				print(i);
 				var slot = Instantiate(slotPrefab, slotsParent).GetComponent<InventorySlot>();
 				slot.UpdateSlot(null);
 				slots[i] = slot;
@@ -70,27 +65,11 @@ namespace FrameWorks.BackpackFrame.View
 			}
 		}
 
-		private void SetDraggingIcon(Sprite icon, string amount)
-		{
-			draggingIcon.sprite = icon;
-			draggingAmount.text = amount;
-			draggingIcon.gameObject.SetActive(true);
-		}
-		public void HideDraggingIcon()
-		{ 
-			draggingAmount.text = "";
-			draggingIcon.gameObject.SetActive(false);
-		}
-		
-		public void UpdateDraggingPosition(Vector2 position) => 
-			draggingIcon.rectTransform.position = position;
-
 		
 		
 		public void HandleSlotClicked(InventorySlot clickedSlot)
 		{
-			Debug.Log("Clicked");
-			int index = Array.IndexOf(slots, clickedSlot);
+			var index = Array.IndexOf(slots, clickedSlot);
 			if (index != -1)
 			{
 				HandleClickInput(index);
@@ -103,20 +82,14 @@ namespace FrameWorks.BackpackFrame.View
 		
 		private void HandleGrab(int index)
 		{
+			Debug.Log("HandleGrab");
 			if(!slots[index].HasItem())
 				return;
+			
 			OnGrab?.OnNext(index);
-			SetDraggingIcon(slots[index].GetItem().sprite, slots[index].GetItem().amount);
 			ClearSlot(index);
 		}
 
-		private void HandleDrop(int targetIndex)
-		{
-			OnDrop?.OnNext((draggedIndex.Value, targetIndex));
-			InputManager.Instance.highestPriority = false;
-			draggedIndex = null;
-			HideDraggingIcon();
-		}
-	
+		
 	}
 }

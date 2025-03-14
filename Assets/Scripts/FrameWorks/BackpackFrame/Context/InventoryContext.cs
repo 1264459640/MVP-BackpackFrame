@@ -9,9 +9,10 @@ namespace FrameWorks.BackpackFrame.Context
 {
 	public class InventoryContext : LifetimeScope
 	{
+		private InventoryModel Model => gameObject.GetOrAddComponent<InventoryModel>();
 		protected override void Configure(IContainerBuilder builder)
 		{
-			builder.RegisterFactory(() => new InventoryModel(40)).AsSelf();
+			builder.RegisterComponent(Model);
 			builder.RegisterComponentInHierarchy<InventoryView>().AsImplementedInterfaces();
 			builder.RegisterEntryPoint<InventoryPresenter>();
 

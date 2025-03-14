@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using Events;
 using FrameWorks.UIFrame.Base;
 using FrameWorks.UIFrame.Screens;
+using FrameWorks.UIFrame.Screens.InventoryScreens;
 using UnityEngine;
 
 namespace Manager
 {
 	public class UIManager : MonoSingleton<UIManager>
 	{
-		private UIScreen backpackScreen;
+		private UIScreen inventoryScreen;
 
 		public UIScreen CurrentScreen { get; private set; }
 		public bool HasUI => history.Count > 0;
@@ -28,7 +29,7 @@ namespace Manager
 
 		private void Initialize()
 		{
-			backpackScreen = new BackpackScreen(gameObject.transform.Find("BackpackScreen").gameObject);
+			inventoryScreen = new InventoryScreen(transform.Find("InventoryScreen").gameObject);
 			RegisterScreens();
 			HideScreens();
 		}
@@ -37,9 +38,9 @@ namespace Manager
 		{
 			UnsubscribeFromEvents();
 		}
-		private void UIEvents_BackpackShown()
+		private void UIEvents_InventoryShown()
 		{
-			Show(backpackScreen, true);
+			Show(inventoryScreen, true);
 		}
 
 		private void UIEvents_ScreenClosed()
@@ -56,20 +57,20 @@ namespace Manager
 
 		private void SubscribeToEvents()
 		{
-			UIEvents.BackpackShow += UIEvents_BackpackShown;
+			UIEvents.InventoryShow += UIEvents_InventoryShown;
 			UIEvents.ScreenClosed += UIEvents_ScreenClosed;
 		}
 
 		private void UnsubscribeFromEvents()
 		{
-			UIEvents.BackpackShow -= UIEvents_BackpackShown;
+			UIEvents.InventoryShow -= UIEvents_InventoryShown;
 			UIEvents.ScreenClosed -= UIEvents_ScreenClosed;
 		}
 		private void RegisterScreens()
 		{
 			screens = new List<UIScreen>
 			{
-				backpackScreen
+				inventoryScreen
 			};
 		}
 		

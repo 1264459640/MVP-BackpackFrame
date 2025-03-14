@@ -21,7 +21,7 @@ namespace FrameWorks.UIFrame.Base
         {
             canvasGroup.alpha = 1;
             canvasGroup.interactable = true;
-            
+            canvasGroup.blocksRaycasts = true;
             root.transform.SetAsFirstSibling();
             OnEnable();
         }
@@ -30,6 +30,7 @@ namespace FrameWorks.UIFrame.Base
         {
             canvasGroup.alpha = 0;
             canvasGroup.interactable = false;
+            canvasGroup.blocksRaycasts = false;
             OnDisable();
         }
 
