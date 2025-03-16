@@ -11,7 +11,6 @@ namespace FrameWorks.BackpackFrame.Context
 		protected override void Configure(IContainerBuilder builder)
 		{
 			builder.RegisterComponent(InventorySlot);
-			builder.RegisterComponentInHierarchy<InventoryView>().AsImplementedInterfaces();
 			builder.RegisterEntryPoint<SlotClickPresenter>();
 		}
 	}

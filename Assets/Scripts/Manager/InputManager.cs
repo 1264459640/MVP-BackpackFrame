@@ -59,12 +59,12 @@ namespace Manager
 		}
 		private void HighestPriorityStream()
 		{
-			Debug.Log("high");
+			
 		}
 
 		private void MediumPriorityStream()
 		{
-			Debug.Log("medium");
+			
 		}
 		
 		private static void LowestPriorityStream()

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b837a3221e14646a188b8efebcf66dc, type: 3}
+  m_Name: ItemData
+  m_EditorClassIdentifier: 
+  consumableList:
+  - id: 0
+    maxQuantity: 1
+    quantity: 1
+    icon: {fileID: 5536784514555325073, guid: 36213be7768037e44898d0e8dbee419b, type: 3}
+    hp: 2
+    mp: 2
+  - id: 1
+    maxQuantity: 99
+    quantity: 1
+    icon: {fileID: 5667541849753931895, guid: 96df5282e804a6f488e4b55e33dbbef2, type: 3}
+    hp: 2
+    mp: 3
+  weaponList: []
+  equipmentList: []
+  materialList: []

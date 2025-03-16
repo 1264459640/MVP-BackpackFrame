@@ -1,5 +1,6 @@
 using FrameWorks.BackpackFrame.Model;
 using FrameWorks.BackpackFrame.Presenter;
+using FrameWorks.BackpackFrame.Systems;
 using FrameWorks.BackpackFrame.View;
 using Unity.VisualScripting;
 using VContainer;
@@ -13,9 +14,11 @@ namespace FrameWorks.BackpackFrame.Context
 		protected override void Configure(IContainerBuilder builder)
 		{
 			builder.RegisterComponent(Model);
-			builder.RegisterComponentInHierarchy<InventoryView>().AsImplementedInterfaces();
-			builder.RegisterEntryPoint<InventoryPresenter>();
-
+			builder.RegisterComponentInHierarchy<BackPackView>().AsImplementedInterfaces();
+			
+			builder.RegisterEntryPoint<InventoryPresenter>().AsSelf();
+			builder.RegisterComponentInHierarchy<Test>();
+			
 		}
 
 		

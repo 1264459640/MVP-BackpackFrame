@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/InspectorButton/Editor/InspectorButton.cs.meta
+guid: c2a3b1e56ff31b44bb38f36d5de77b5d
+========
+guid: 4e60e759712c6f9439cc3fcb32509693
+>>>>>>>> Kaitomaam-（关卡设计）:Assets/Resources/Scripts/Waypoint.cs.meta
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

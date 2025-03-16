@@ -3,25 +3,13 @@ using UnityEngine;
 
 namespace FrameWorks.UIFrame.Screens.InventoryScreens
 {
-	public class DragScreen : UIScreen
+	public class DragScreen 
 	{
-		public DragScreen(GameObject root) : base(root)
+		private readonly GameObject root;
+		public DragScreen(GameObject root) 
 		{
+			this.root = root;
 		}
-
-		protected override void RegisterEvent()
-		{
-			
-		}
-
-		protected override void OnDisable()
-		{
-			
-		}
-
-		protected override void OnEnable()
-		{
-			
-		}
+		
 	}
 }

@@ -18,14 +18,11 @@ namespace FrameWorks.BackpackFrame.ItemData
 
 		public bool Merge(Item item)
 		{
-			if (CanMergeWith(item) && !IsStackMax())
-			{
-				var totalQuantity = quantity + item.quantity;
-				quantity = Math.Min(totalQuantity, maxQuantity);
-				item.quantity = Math.Max(0,totalQuantity - maxQuantity);
-				return true;
-			}
-			return false;
+			if (!CanMergeWith(item) || IsStackMax()) return false;
+			var totalQuantity = quantity + item.quantity;
+			quantity = Math.Min(totalQuantity, maxQuantity);
+			item.quantity = Math.Max(0,totalQuantity - maxQuantity);
+			return true;
 		}
 
 		private bool CanMergeWith(Item item)

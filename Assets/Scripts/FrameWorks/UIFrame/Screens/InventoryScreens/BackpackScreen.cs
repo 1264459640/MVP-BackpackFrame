@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using Events;
 using Extension;
 using FrameWorks.UIFrame.Base;
@@ -8,38 +9,35 @@ using UnityEngine.UI;
 
 namespace FrameWorks.UIFrame.Screens.InventoryScreens
 {
-	public sealed class BackpackScreen : UIScreen
+	public sealed class BackpackScreen 
 	{
+		private readonly GameObject root;
+		
 		private Button backButton;
-		public BackpackScreen(GameObject root) : base(root)
+		
+		
+		public BackpackScreen(GameObject root) 
 		{
+			this.root = root;
 			RegisterEvent();
+			InitializeComponent();
 		}
 
-		protected override void InitializeComponent()
+		private void InitializeComponent()
 		{
-			base.InitializeComponent();
 			backButton = root.GetOrAddComponentInChild<Button>("Back");
 		}
 
-		protected override void RegisterEvent()
+		private void RegisterEvent()
 		{
 			backButton.OnPointerDownAsObservable()
 				.Subscribe(_ =>
 				{
+					Debug.Log(2);
 					UIEvents.ScreenClosed?.Invoke();
 				})
-				.AddTo(disposable);
+				.AddTo(root.GetCancellationTokenOnDestroy());
 		}
-
-		protected override void OnDisable()
-		{
-			UIManager.Instance.isBackPackActive = false;
-		}
-
-		protected override void OnEnable()
-		{
-			UIManager.Instance.isBackPackActive = true;
-		}
+		
 	}
 }

@@ -1,4 +1,6 @@
 using System;
+using FrameWorks.BackpackFrame.ItemData;
+using R3;
 
 namespace Events
 {
@@ -6,5 +8,6 @@ namespace Events
 	{
 		public static Action ScreenClosed;
 		public static Action InventoryShow;
+
 	}
 }

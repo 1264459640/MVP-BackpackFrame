@@ -5,13 +5,11 @@ namespace FrameWorks.BackpackFrame.View
 {
 	public interface IInventoryView
 	{
-
-
-		public Subject<int> OnGrab { get; set; } 
+		
 		public int SlotCount();
 		void Initialize(int slotCount);
 		void UpdateSlot(int index, Item item);
 
-		void HandleSlotClicked(InventorySlot slot);
+		void ClearSlot(int index);
 	}
 }

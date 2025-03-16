@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FrameWorks.BackpackFrame.ItemData;
+using JetBrains.Annotations;
 using R3;
 using UnityEngine;
 
@@ -56,50 +57,42 @@ namespace FrameWorks.BackpackFrame.Model
 			return ItemList.Value[index];
 		}
 
-		public void SwapItems(int draggedIndex, int targetIndex)
+		public Item SwapItems(Item draggedItem, int targetIndex)
 		{
-			// 避免不必要的交换操作
-			if (draggedIndex != targetIndex)
-			{
-				(ItemList.Value[draggedIndex], ItemList.Value[targetIndex]) = (ItemList.Value[targetIndex], ItemList.Value[draggedIndex]);
-			}
+			(draggedItem, ItemList.Value[targetIndex]) = (ItemList.Value[targetIndex], draggedItem);
+			
 			ItemList.ForceNotify();
+			return draggedItem;
 		}
-		
+
 		/// <summary>
 		/// 合并两个物品栏中的物品。
 		/// </summary>
-		/// <param name="draggedIndex">被拖动物品的索引。</param>
+		/// <param name="draggedItem"></param>
 		/// <param name="targetIndex">目标物品的索引。</param>
 		/// <returns>如果合并成功且拖动的物品数量为0，则返回true，否则返回false。</returns>
-		public bool MergeItems(int draggedIndex, int targetIndex)
+		public bool MergeItems(Item draggedItem, int targetIndex, out Item mergedItem)
 		{
-			// 验证索引的有效性
-			if (draggedIndex < 0 || draggedIndex >= ItemList.Value.Count || targetIndex < 0 || targetIndex >= ItemList.Value.Count)
+			var targetItem = GetItem(targetIndex);
+			if (targetItem == null || draggedItem == null)
 			{
+				mergedItem = draggedItem;
 				return false;
 			}
-			
-			var targetItem = GetItem(targetIndex);
-			var draggedItem = GetItem(draggedIndex);
-			if (targetItem == null || draggedItem == null) return false;
 
 			try
 			{
 				var canMerge = targetItem.Merge(draggedItem);
-				if (canMerge && draggedItem.quantity == 0)
-				{
-					RemoveItem(draggedIndex);
-					ItemList.ForceNotify();
-					return true;
-				}
+				var success = canMerge && draggedItem.quantity == 0;
+				mergedItem = success ? null : draggedItem;
 				ItemList.ForceNotify();
-				return false;
+				return success;
 			}
 			catch (Exception ex)
 			{
 				// 记录异常信息或进行其他处理
 				Debug.Log($"Merge failed: {ex.Message}");
+				mergedItem = draggedItem;
 				return false;
 			}
 		}

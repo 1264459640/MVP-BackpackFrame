@@ -33,16 +33,6 @@ namespace FrameWorks.BackpackFrame.View
 			IconImage.color = new Color(1,1,1,0);
 			quantityText.text = "";
 		}
-
-		public (Sprite sprite, string amount) GetItem()
-		{
-			return (IconImage.sprite, quantityText.text);
-		}
-		
-		public bool HasItem()
-		{
-			return IconImage.color.a > 0;
-		}
 		
 	}
 }
